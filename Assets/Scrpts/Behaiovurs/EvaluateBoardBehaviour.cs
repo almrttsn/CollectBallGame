@@ -7,6 +7,7 @@ public class EvaluateBoardBehaviour : MonoBehaviour
 {
     private GameManager _gameManager;
     private BallBehaviour _droppedBall;
+    private int _ballCount;
 
     public void Initialize(GameManager gameManager)
     {
@@ -17,7 +18,8 @@ public class EvaluateBoardBehaviour : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ball")
         {
-            Debug.Log("Ball dropped");
+            _ballCount++;
+            Debug.Log("Ball count is " + _ballCount);
         }
     }
 }
