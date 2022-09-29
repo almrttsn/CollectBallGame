@@ -5,9 +5,11 @@ using UnityEngine;
 public class BallBehaviour : MonoBehaviour
 {
     [SerializeField] private GameObject _ball;
+    private GameManager _gameManager;
 
     public void Initialize(GameManager gameManager)
     {
+        _gameManager = gameManager;
         BallCreateProcess();
     }
 

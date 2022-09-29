@@ -10,10 +10,13 @@ public class PlayerMovementBehaviour : MonoBehaviour
     [SerializeField] private float _playerMovementSpeed;
     [SerializeField] private float _playerMovementFactor;
 
+    private GameManager _gameManager;
+
     private bool _isPlayerLocked;
 
     public void Initialize(GameManager gameManager)
     {
+        _gameManager = gameManager;
         _isPlayerLocked = false;
     }    
 
