@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovementBehaviour : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
     [SerializeField] private float _playerMovementSpeed;
     [SerializeField] private float _playerMovementFactor;
     [SerializeField] private Text _levelEndText;    
+    [SerializeField] private Text _startText;
 
     private GameManager _gameManager;
     private bool _isObjectTriggered;
@@ -22,6 +24,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
         _gameManager = gameManager;
         IsPlayerLockedToMove = false;
         InputController.OnDrag += PlayerMovementXAxis;
+        StartCoroutine(StartTextCo());
     }
 
     private void Update()
@@ -29,6 +32,11 @@ public class PlayerMovementBehaviour : MonoBehaviour
         if (IsPlayerLockedToMove == false)
         {
             transform.position += new Vector3(0, 0, _playerMovementSpeed) * _playerMovementFactor * Time.deltaTime;
+        }
+
+        if(transform.position.y < -10f)
+        {
+            SceneManager.LoadScene(0);
         }
     }
 
@@ -45,13 +53,22 @@ public class PlayerMovementBehaviour : MonoBehaviour
             Debug.Log("Triggered");
             IsPlayerLockedToMove = true;
             _isObjectTriggered = true; //instead of //Destroy(other.gameObject);
+            //add no movement
         }
 
         if(other.gameObject == _levelEndTrigger)
         {
             IsPlayerLockedToMove = true;
             _levelEndText.SetActive(true);
+            //add no movement
         }
+    }
+
+    private IEnumerator StartTextCo()
+    {
+        _startText.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        _startText.SetActive(false);
     }
 
 }
