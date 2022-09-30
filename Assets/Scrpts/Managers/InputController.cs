@@ -18,7 +18,6 @@ public class InputController : CustomBehaviour
 
     private bool _isDragging;
 
-
     #region Initialize
 
     public override void Initialize(GameManager gameManager)
