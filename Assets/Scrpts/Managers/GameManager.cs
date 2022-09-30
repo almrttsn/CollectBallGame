@@ -8,12 +8,13 @@ public class GameManager : CustomBehaviour
     public PlayerMovementBehaviour PlayerMovementBehaviour => _playerMovementBehaviour;
     public BallBehaviour BallBehaviour => _ballBehaviour;
     public EvaluateBoardBehaviour EvaluateBoardBehaviour => _evaluateBoardBehaviour;
-
+    public InputController InputController => _inputController;
 
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private PlayerMovementBehaviour _playerMovementBehaviour;
     [SerializeField] private BallBehaviour _ballBehaviour;
     [SerializeField] private EvaluateBoardBehaviour _evaluateBoardBehaviour;
+    [SerializeField] private InputController _inputController;
 
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class GameManager : CustomBehaviour
         _playerMovementBehaviour.Initialize(this);
         _ballBehaviour.Initialize(this);
         _evaluateBoardBehaviour.Initialize(this);
+        _inputController.Initialize(this);
     }
 }
 
