@@ -19,7 +19,14 @@ public class EvaluateBoardBehaviour : MonoBehaviour
         if (collision.gameObject.tag == "Ball")
         {
             _ballCount++;
+            BoardHeightUpProcess();
+            Destroy(collision.gameObject);
             Debug.Log("Ball count is " + _ballCount);
         }
+    }
+
+    private void BoardHeightUpProcess()
+    {
+        transform.position = new Vector3(0, transform.position.y + _ballCount, transform.position.z);
     }
 }
