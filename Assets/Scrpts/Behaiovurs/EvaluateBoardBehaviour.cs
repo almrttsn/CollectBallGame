@@ -15,7 +15,7 @@ public class EvaluateBoardBehaviour : MonoBehaviour
         _gameManager = gameManager;
         _requiredHeightToPlayerMove = (-(int)transform.position.y);
         Debug.Log((-(int)transform.position.y));
-        _boardMaterial.color = Color.blue;
+        _boardMaterial.color = Color.green;
     }
 
     private void OnCollisionEnter(Collision collision)
