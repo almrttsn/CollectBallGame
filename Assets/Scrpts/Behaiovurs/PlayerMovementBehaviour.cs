@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class PlayerMovementBehaviour : MonoBehaviour
 {
     public bool IsPlayerLockedToMove;
+
     [SerializeField] private GameObject _parkourEndTrigger;
     [SerializeField] private GameObject _levelEndTrigger;
     [SerializeField] private GameObject _player;
@@ -15,6 +16,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
     [SerializeField] private float _playerMovementFactor;
     [SerializeField] private Text _levelEndText;    
     [SerializeField] private Text _startText;
+    [SerializeField] private Button _restartButton;
 
     private GameManager _gameManager;
     private bool _isObjectTriggered;
@@ -36,8 +38,18 @@ public class PlayerMovementBehaviour : MonoBehaviour
 
         if(transform.position.y < -10f)
         {
-            SceneManager.LoadScene(0);
+            RestartLevel();
         }
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    private void OnDestroy()
+    {
+        InputController.OnDrag -= PlayerMovementXAxis;
     }
 
     private void PlayerMovementXAxis(Vector2 dragVector)
@@ -54,6 +66,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
             IsPlayerLockedToMove = true;
             _isObjectTriggered = true; //instead of //Destroy(other.gameObject);
             //add no movement
+            StartCoroutine(ShowRestartButton());
         }
 
         if(other.gameObject == _levelEndTrigger)
@@ -69,6 +82,12 @@ public class PlayerMovementBehaviour : MonoBehaviour
         _startText.SetActive(true);
         yield return new WaitForSeconds(3f);
         _startText.SetActive(false);
+    }
+
+    private IEnumerator ShowRestartButton()
+    {
+        yield return new WaitForSeconds(7f);
+        _restartButton.SetActive(true);
     }
 
 }
