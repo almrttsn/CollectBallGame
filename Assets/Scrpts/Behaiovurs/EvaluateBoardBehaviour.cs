@@ -6,12 +6,14 @@ using UnityEngine;
 public class EvaluateBoardBehaviour : MonoBehaviour
 {
     private GameManager _gameManager;
-    private BallBehaviour _droppedBall;
     private int _ballCount;
+    private int _requiredHeightToPlayerMove;
 
     public void Initialize(GameManager gameManager)
     {
         _gameManager = gameManager;
+        _requiredHeightToPlayerMove = (-(int)transform.position.y);
+        Debug.Log((-(int)transform.position.y));
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -19,14 +21,20 @@ public class EvaluateBoardBehaviour : MonoBehaviour
         if (collision.gameObject.tag == "Ball")
         {
             _ballCount++;
-            BoardHeightUpProcess();
+            if (_ballCount <= _requiredHeightToPlayerMove)
+            {
+                BoardHeightUpProcess();
+            }
             Destroy(collision.gameObject);
-            Debug.Log("Ball count is " + _ballCount);
+            if (_ballCount == _requiredHeightToPlayerMove)
+            {
+                _gameManager.PlayerMovementBehaviour.IsPlayerLockedToMove = false;
+            }
         }
     }
 
     private void BoardHeightUpProcess()
     {
-        transform.position = new Vector3(0, transform.position.y + _ballCount, transform.position.z);
+        transform.position = new Vector3(0, transform.position.y + 1f, transform.position.z);
     }
 }
