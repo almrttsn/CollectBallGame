@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EvaluateBoardBehaviour : MonoBehaviour
 {
+    [SerializeField] private Material _boardMaterial;
     private GameManager _gameManager;
     private int _ballCount;
     private int _requiredHeightToPlayerMove;
@@ -14,6 +15,7 @@ public class EvaluateBoardBehaviour : MonoBehaviour
         _gameManager = gameManager;
         _requiredHeightToPlayerMove = (-(int)transform.position.y);
         Debug.Log((-(int)transform.position.y));
+        _boardMaterial.color = Color.blue;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -29,6 +31,7 @@ public class EvaluateBoardBehaviour : MonoBehaviour
             if (_ballCount == _requiredHeightToPlayerMove)
             {
                 _gameManager.PlayerMovementBehaviour.IsPlayerLockedToMove = false;
+                _boardMaterial.color = Color.white;
             }
         }
     }
