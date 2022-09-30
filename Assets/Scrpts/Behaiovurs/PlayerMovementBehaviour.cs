@@ -17,6 +17,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
     [SerializeField] private Text _levelEndText;    
     [SerializeField] private Text _startText;
     [SerializeField] private Button _restartButton;
+    [SerializeField] private ParticleSystem _confettiParticle;
 
     private GameManager _gameManager;
     private bool _isObjectTriggered;
@@ -73,6 +74,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
         {
             IsPlayerLockedToMove = true;
             _levelEndText.SetActive(true);
+            _confettiParticle.Play();
             //add no movement
         }
     }
