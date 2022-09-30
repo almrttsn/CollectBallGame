@@ -13,6 +13,8 @@ public class PlayerMovementBehaviour : MonoBehaviour
     private GameManager _gameManager;
 
     private bool _isPlayerLocked;
+    private float _mouseZCoordinate;
+    private Vector3 _mouseOffset;
 
     public void Initialize(GameManager gameManager)
     {
@@ -26,16 +28,28 @@ public class PlayerMovementBehaviour : MonoBehaviour
         {
             transform.position += new Vector3(0, 0, _playerMovementSpeed) * _playerMovementFactor * Time.deltaTime;
 
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                transform.position += new Vector3(-_playerMovementSpeed, 0, 0) * _playerMovementFactor * Time.deltaTime;
-            }
+            //if (Input.GetKey(KeyCode.LeftArrow))
+            //{
+            //    transform.position += new Vector3(-_playerMovementSpeed, 0, 0) * _playerMovementFactor * Time.deltaTime;
+            //}
 
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                transform.position += new Vector3(_playerMovementSpeed, 0, 0) * _playerMovementFactor * Time.deltaTime;
-            }
+            //if (Input.GetKey(KeyCode.RightArrow))
+            //{
+            //    transform.position += new Vector3(_playerMovementSpeed, 0, 0) * _playerMovementFactor * Time.deltaTime;
+            //}
         }
+    }
+
+    private Vector3 GetMouseWorldPos()
+    {
+        Vector3 mousePoint = Input.mousePosition;
+        mousePoint.z = _mouseZCoordinate;
+        return Camera.main.ScreenToWorldPoint(mousePoint);
+    }
+
+    private void OnMouseDrag()
+    {
+        transform.position = GetMouseWorldPos() + _mouseOffset;
     }
 
     private void OnTriggerEnter(Collider other)
