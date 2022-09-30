@@ -2,62 +2,56 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovementBehaviour : MonoBehaviour
 {
-    [SerializeField] private GameObject _triggerObject;
+    public bool IsPlayerLockedToMove;
+    [SerializeField] private GameObject _parkourEndTrigger;
+    [SerializeField] private GameObject _levelEndTrigger;
     [SerializeField] private GameObject _player;
     [SerializeField] private float _playerMovementSpeed;
     [SerializeField] private float _playerMovementFactor;
+    [SerializeField] private Text _levelEndText;    
 
     private GameManager _gameManager;
-
-    private bool _isPlayerLocked;
-    private float _mouseZCoordinate;
-    private Vector3 _mouseOffset;
+    private bool _isObjectTriggered;
 
     public void Initialize(GameManager gameManager)
     {
         _gameManager = gameManager;
-        _isPlayerLocked = false;
-    }    
+        IsPlayerLockedToMove = false;
+        InputController.OnDrag += PlayerMovementXAxis;
+    }
 
     private void Update()
     {
-        if (_isPlayerLocked == false)
+        if (IsPlayerLockedToMove == false)
         {
             transform.position += new Vector3(0, 0, _playerMovementSpeed) * _playerMovementFactor * Time.deltaTime;
-
-            //if (Input.GetKey(KeyCode.LeftArrow))
-            //{
-            //    transform.position += new Vector3(-_playerMovementSpeed, 0, 0) * _playerMovementFactor * Time.deltaTime;
-            //}
-
-            //if (Input.GetKey(KeyCode.RightArrow))
-            //{
-            //    transform.position += new Vector3(_playerMovementSpeed, 0, 0) * _playerMovementFactor * Time.deltaTime;
-            //}
         }
     }
 
-    private Vector3 GetMouseWorldPos()
+    private void PlayerMovementXAxis(Vector2 dragVector)
     {
-        Vector3 mousePoint = Input.mousePosition;
-        mousePoint.z = _mouseZCoordinate;
-        return Camera.main.ScreenToWorldPoint(mousePoint);
+        transform.position += new Vector3(dragVector.x, 0, 0);
     }
 
-    private void OnMouseDrag()
-    {
-        transform.position = GetMouseWorldPos() + _mouseOffset;
-    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == _triggerObject)
+        if(other.gameObject == _parkourEndTrigger && _isObjectTriggered == false)
         {
             Debug.Log("Triggered");
-            _isPlayerLocked = true;
+            IsPlayerLockedToMove = true;
+            _isObjectTriggered = true; //instead of //Destroy(other.gameObject);
+        }
+
+        if(other.gameObject == _levelEndTrigger)
+        {
+            IsPlayerLockedToMove = true;
+            _levelEndText.SetActive(true);
         }
     }
+
 }
