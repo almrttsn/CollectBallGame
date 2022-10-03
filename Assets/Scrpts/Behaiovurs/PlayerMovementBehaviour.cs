@@ -9,8 +9,8 @@ public class PlayerMovementBehaviour : MonoBehaviour
 {
     public bool IsPlayerLockedToMove;
 
-    [SerializeField] private GameObject _parkourEndTrigger;
-    [SerializeField] private GameObject _levelEndTrigger;
+    //[SerializeField] private GameObject _parkourEndTrigger;
+    //[SerializeField] private GameObject _levelEndTrigger;
     [SerializeField] private GameObject _player;
     [SerializeField] private float _playerMovementSpeed;
     [SerializeField] private float _playerMovementFactor;
@@ -28,6 +28,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
         IsPlayerLockedToMove = false;
         InputController.OnDrag += PlayerMovementXAxis;
         StartCoroutine(StartTextCo());
+        _gameManager.EventManager.OnLevelStarted += ResetPlayer;
     }
 
     private void Update()
@@ -43,6 +44,13 @@ public class PlayerMovementBehaviour : MonoBehaviour
         }
     }
 
+    private void ResetPlayer()
+    {
+        transform.position = new Vector3(0,1,12);
+        IsPlayerLockedToMove = false;
+        _isObjectTriggered = false;
+    }
+
     public void RestartLevel()
     {
         SceneManager.LoadScene(0);
@@ -51,6 +59,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
     private void OnDestroy()
     {
         InputController.OnDrag -= PlayerMovementXAxis;
+        _gameManager.EventManager.OnLevelStarted -= ResetPlayer;
     }
 
     private void PlayerMovementXAxis(Vector2 dragVector)
@@ -61,7 +70,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == _parkourEndTrigger && _isObjectTriggered == false)
+        if(other.gameObject.tag == "ParkourEnd" && _isObjectTriggered == false)
         {
             Debug.Log("Triggered");
             IsPlayerLockedToMove = true;
@@ -70,12 +79,13 @@ public class PlayerMovementBehaviour : MonoBehaviour
             StartCoroutine(ShowRestartButton());
         }
 
-        if(other.gameObject == _levelEndTrigger)
+        if(other.gameObject.tag == "LevelEnd")
         {
             IsPlayerLockedToMove = true;
             _levelEndText.SetActive(true);
             _confettiParticle.Play();
             //add no movement
+            _gameManager.EventManager.LevelComplete();
         }
     }
 
