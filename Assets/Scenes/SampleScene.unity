@@ -17297,5 +17297,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: BallController
       objectReference: {fileID: 0}
+    - target: {fileID: 2404390029543845503, guid: 4bdebcf0c36a34244a873fb81212c18c, type: 3}
+      propertyPath: _desiredBallCount
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bdebcf0c36a34244a873fb81212c18c, type: 3}
