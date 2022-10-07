@@ -86,6 +86,14 @@ public class PlayerMovementBehaviour : MonoBehaviour
             _confettiParticle.Play();
             //add no movement
             _gameManager.EventManager.LevelComplete();
+        }        
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Obstacle")
+        {
+            _gameManager.LevelManager.RestartLevel();
         }
     }
 
