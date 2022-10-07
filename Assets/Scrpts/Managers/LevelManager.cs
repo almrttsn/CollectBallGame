@@ -20,14 +20,14 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            RestartLevel();
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            NextLevel();
-        }
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    RestartLevel();
+        //}
+        //if (Input.GetKeyDown(KeyCode.N))
+        //{
+        //    NextLevel();
+        //}
     }
 
     private void OnDestroy()
