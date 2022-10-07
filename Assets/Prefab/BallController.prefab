@@ -45,4 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ballList: []
   _ball: {fileID: 3908272417697686604, guid: 933272f5278bb7a409871548f6f81d1b, type: 3}
-  _desiredBallCount: 8
+  _desiredBallCount: 6
