@@ -27,7 +27,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
         _gameManager = gameManager;
         IsPlayerLockedToMove = false;
         InputController.OnDrag += PlayerMovementXAxis;
-        StartCoroutine(StartTextCo());
+        //StartCoroutine(StartTextCo());
         _gameManager.EventManager.OnLevelStarted += ResetPlayer;
     }
 
@@ -76,7 +76,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
             IsPlayerLockedToMove = true;
             _isObjectTriggered = true; //instead of //Destroy(other.gameObject);
             //add no movement
-            StartCoroutine(ShowRestartButton());
+            //StartCoroutine(ShowRestartButton());
         }
 
         if(other.gameObject.tag == "LevelEnd")
@@ -89,7 +89,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
         }
     }
 
-    private IEnumerator StartTextCo()
+    public IEnumerator StartTextCo()
     {
         _startText.SetActive(true);
         yield return new WaitForSeconds(3f);
