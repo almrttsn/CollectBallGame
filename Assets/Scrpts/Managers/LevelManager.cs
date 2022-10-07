@@ -44,6 +44,7 @@ public class LevelManager : MonoBehaviour
         }
         _currentLevel =  Instantiate(_levels[PlayerData.LevelID]);
         _currentLevel.Initialize(_gameManager);
+        StartCoroutine(_gameManager.PlayerMovementBehaviour.StartTextCo());
         //_currentLevel =  Instantiate(_levels[PlayerData.LevelID%_levels.Count]); //modMethod
     }
 
